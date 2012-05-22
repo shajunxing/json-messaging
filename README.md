@@ -265,7 +265,7 @@ The client unsubscribe a message destination.
 The format is:
 
     {
-        "type": "subscribe",
+        "type": "unsubscribe",
         "destination": <message destination>
     }
 
