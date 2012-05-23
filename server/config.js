@@ -1,5 +1,6 @@
 /************************************************************************
  *  Copyright (c) 2011-2012 SHA Junxing.
+ *  shajunxing@163.com, shajunxing@gmail.com
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@ var log = require('./log');
 module.exports = {
     // tcp listening port
     tcpPort: 8153,
-    // udp listening port
+    // udp listening port, udp can only be used to publish messages
     udpPort: 8154,
     // websocket listening port
     wsPort: 8155,
@@ -30,5 +31,5 @@ module.exports = {
     // log level
     logLevel: log.LEVEL.ALL,
     // colored output
-    coloredOutput: true
+    coloredOutput: false
 };

@@ -4,19 +4,19 @@
 
 Json Messaging is a standalone pub/sub messaging server built with node.js, which has following features:
 
-1. Support both TCP and WebSocket protocol.
+1. Support both TCP, UDP and WebSocket protocol.
 2. Use Json as frame format.
 3. The message destination can be subscribed by regular expression, and the regular expression may contains "capture". Messages matched by the regular expression will be sent to the subscriber, (including capture result if exists).
 4. One client can subscribe multiple destinations.
 5. The server doesn't persist any message.
 
-## Project
+## Changelog
 
-https://sourceforge.net/projects/jsonmessaging/
+### 2012.05.23
 
-## Download
-
-https://sourceforge.net/projects/jsonmessaging/files/
+* Added UDP support. UDP is very efficient than TCP in many cases. Notice that UDP only support message publishing. Message subscripition is not supported because there is almost no efficient mechanism to determine whether the UDP "client" is still alive.
+* Added socket error handling on TCP implementation. Socket could be reset while writing a lot of data back to client in a short period of time and Node.js will raise "Error: write ECONNRESET" or "Error: write Unknown system errno 10055". Now the socket will be closed under this condition.
+* Reconstructed source code, hide most of the global definitions.
 
 ## Thanks
 
@@ -29,9 +29,9 @@ Many third party frameworks and technology are used by Json Messaging Server. Th
 
 ## Usage
 
-1. Build and install the latest version of node.js.
-2. Customize TCP and WebSocket port and other options in "server/config.js".
-3. Start the server using command: "node server/server.js".
+1. Download the latest version of node.js (currently tested on version 0.6.x).
+2. Start the server using command: "node server/server.js".
+3. Port and other options can be customized in "server/config.js".
 
 ## Examples
 
@@ -223,7 +223,7 @@ The following C program sends three "Hello World" messages, the first is english
 
 ## Frame Format
 
-Message frames are packed by Json format, and encoded by UTF-8. In TCP protocol, frames are splited by '\0'.
+Message frames are packed by Json format, and encoded by UTF-8. In TCP protocol, frames are splited by '\0'. In UDP protocol, one packet one frame.
 
 There are 5 types of frame, 3 for client side and 2 for server side.
 
@@ -243,7 +243,7 @@ The format is:
 
 The message destination is a string, and the message content must also be packed by Json format.
 
-#### Subscribe Frame
+#### Subscribe Frame (UDP not supported)
 
 The client subscribe a destination, and all the messages matched this destination will be sent to the subscriber.
 
@@ -258,7 +258,7 @@ The message destination may be a regular expression, and may include "capture". 
 
 One client can subscribe multiple destinations.
 
-#### Unsubscribe Frame
+#### Unsubscribe Frame (UDP not supported)
 
 The client unsubscribe a message destination.
 
@@ -330,7 +330,7 @@ The server entrance.
 
 ### config.js
 
-The global configuration. Because UDP protocol is stateless and hard to get client status(connected/disconnected), UDP is not supported and "udpPort" is currently not used.
+The global configuration. Because UDP protocol is stateless and hard to get client status(connected/disconnected), UDP only support message publishing.
 
 ### log.js
 
@@ -347,6 +347,10 @@ The core part of the server which handles the pub/sub.
 ### tcp.js
 
 TCP implementation.
+
+### udp.js
+
+UDP implementation.
 
 ### ws.js
 

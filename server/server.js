@@ -1,5 +1,6 @@
 /************************************************************************
  *  Copyright (c) 2011-2012 SHA Junxing.
+ *  shajunxing@163.com, shajunxing@gmail.com
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,23 +17,33 @@
 
 "use strict";
 
-var log = require('./log');
-var config = require('./config');
-var tcp = require('./tcp');
-var ws = require('./ws');
+(function () {
 
-log.setLevel(config.logLevel);
-log.setColoredOutput(config.coloredOutput);
+    var log = require('./log');
+    var config = require('./config');
+    var tcp = require('./tcp');
+    var udp = require('./udp');
+    var ws = require('./ws');
 
-console.info();
-console.info('    ----   ------------');
-console.info('     ||   | --      -- |');
-console.info('     ||   |     --     |');
-console.info('    --     ------------');
-console.info();
-console.info('    Json Messaging version 1.0');
-console.info();
+    log.setLevel(config.logLevel);
+    log.setColoredOutput(config.coloredOutput);
 
+    console.info();
+    console.info('    ----   ------------');
+    console.info('     ||   | --      -- |');
+    console.info('     ||   |     --     |');
+    console.info('    --     ------------');
+    console.info();
+    console.info('    Json Messaging version 1.0');
+    console.info();
+    console.info('    Copyright (C) 2011-2012 SHA Junxing.');
+    console.info();
+    console.info('    shajunxing@163.com');
+    console.info('    shajunxing@gmail.com');
+    console.info();
 
-tcp.createServer(config.tcpPort, config.maxFrameSize);
-ws.createServer(config.wsPort, config.maxFrameSize);
+    tcp.createServer(config.tcpPort, config.maxFrameSize);
+    udp.createServer(config.udpPort, config.maxFrameSize);
+    ws.createServer(config.wsPort, config.maxFrameSize);
+
+}());

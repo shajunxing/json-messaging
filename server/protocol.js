@@ -1,5 +1,6 @@
 /************************************************************************
  *  Copyright (c) 2011-2012 SHA Junxing.
+ *  shajunxing@163.com, shajunxing@gmail.com
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,47 +17,50 @@
 
 "use strict";
 
-function messageFrame(content, match) {
-    return JSON.stringify({
-        type: 'message',
-        match: match,
-        content: content
-    });
-}
+(function () {
 
-function errorFrame(content) {
-    return JSON.stringify({
-        type: 'error',
-        content: content
-    });
-}
+    function messageFrame(content, match) {
+        return JSON.stringify({
+            type:'message',
+            match:match,
+            content:content
+        });
+    }
 
-function publishFrame(content, destination) {
-    return JSON.stringify({
-        type: 'publish',
-        destination: destination,
-        content: content
-    });
-}
+    function errorFrame(content) {
+        return JSON.stringify({
+            type:'error',
+            content:content
+        });
+    }
 
-function subscribeFrame(destination) {
-    return JSON.stringify({
-        type: 'subscribe',
-        destination: destination
-    });
-}
+    function publishFrame(content, destination) {
+        return JSON.stringify({
+            type:'publish',
+            destination:destination,
+            content:content
+        });
+    }
 
-function unsubscribeFrame(destination) {
-    return JSON.stringify({
-        type: 'unsubscribe',
-        destination: destination
-    });
-}
+    function subscribeFrame(destination) {
+        return JSON.stringify({
+            type:'subscribe',
+            destination:destination
+        });
+    }
 
-module.exports = {
-    messageFrame: messageFrame,
-    errorFrame: errorFrame,
-    publishFrame: publishFrame,
-    subscribeFrame: subscribeFrame,
-    unsubscribeFrame: unsubscribeFrame
-};
+    function unsubscribeFrame(destination) {
+        return JSON.stringify({
+            type:'unsubscribe',
+            destination:destination
+        });
+    }
+
+    module.exports = {
+        messageFrame:messageFrame,
+        errorFrame:errorFrame,
+        publishFrame:publishFrame,
+        subscribeFrame:subscribeFrame,
+        unsubscribeFrame:unsubscribeFrame
+    };
+}());
